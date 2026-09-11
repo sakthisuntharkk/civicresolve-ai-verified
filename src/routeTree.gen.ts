@@ -10,33 +10,142 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as AppAnalyticsRouteImport } from './routes/_app/analytics'
+import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppMapRouteImport } from './routes/_app/map'
+import { Route as AppReportRouteImport } from './routes/_app/report'
+import { Route as AppAuthorityIndexRouteImport } from './routes/_app/authority.index'
+import { Route as AppIssuesIssueIdRouteImport } from './routes/_app/issues.$issueId'
+import { Route as AppVerificationIssueIdRouteImport } from './routes/_app/verification.$issueId'
+import { Route as AppAuthorityResolveIssueIdRouteImport } from './routes/_app/authority.resolve.$issueId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMapRoute = AppMapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReportRoute = AppReportRouteImport.update({
+  id: '/report',
+  path: '/report',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAuthorityIndexRoute = AppAuthorityIndexRouteImport.update({
+  id: '/authority/',
+  path: '/authority/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppIssuesIssueIdRoute = AppIssuesIssueIdRouteImport.update({
+  id: '/issues/$issueId',
+  path: '/issues/$issueId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppVerificationIssueIdRoute = AppVerificationIssueIdRouteImport.update({
+  id: '/verification/$issueId',
+  path: '/verification/$issueId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAuthorityResolveIssueIdRoute =
+  AppAuthorityResolveIssueIdRouteImport.update({
+    id: '/authority/resolve/$issueId',
+    path: '/authority/resolve/$issueId',
+    getParentRoute: () => AppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/map': typeof AppMapRoute
+  '/report': typeof AppReportRoute
+  '/issues/$issueId': typeof AppIssuesIssueIdRoute
+  '/verification/$issueId': typeof AppVerificationIssueIdRoute
+  '/authority/': typeof AppAuthorityIndexRoute
+  '/authority/resolve/$issueId': typeof AppAuthorityResolveIssueIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/map': typeof AppMapRoute
+  '/report': typeof AppReportRoute
+  '/issues/$issueId': typeof AppIssuesIssueIdRoute
+  '/verification/$issueId': typeof AppVerificationIssueIdRoute
+  '/authority': typeof AppAuthorityIndexRoute
+  '/authority/resolve/$issueId': typeof AppAuthorityResolveIssueIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/_app/analytics': typeof AppAnalyticsRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/map': typeof AppMapRoute
+  '/_app/report': typeof AppReportRoute
+  '/_app/issues/$issueId': typeof AppIssuesIssueIdRoute
+  '/_app/verification/$issueId': typeof AppVerificationIssueIdRoute
+  '/_app/authority/': typeof AppAuthorityIndexRoute
+  '/_app/authority/resolve/$issueId': typeof AppAuthorityResolveIssueIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/analytics'
+    | '/dashboard'
+    | '/map'
+    | '/report'
+    | '/issues/$issueId'
+    | '/verification/$issueId'
+    | '/authority/'
+    | '/authority/resolve/$issueId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/analytics'
+    | '/dashboard'
+    | '/map'
+    | '/report'
+    | '/issues/$issueId'
+    | '/verification/$issueId'
+    | '/authority'
+    | '/authority/resolve/$issueId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/analytics'
+    | '/_app/dashboard'
+    | '/_app/map'
+    | '/_app/report'
+    | '/_app/issues/$issueId'
+    | '/_app/verification/$issueId'
+    | '/_app/authority/'
+    | '/_app/authority/resolve/$issueId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +157,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/analytics': {
+      id: '/_app/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/map': {
+      id: '/_app/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof AppMapRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/report': {
+      id: '/_app/report'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof AppReportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/authority/': {
+      id: '/_app/authority/'
+      path: '/authority'
+      fullPath: '/authority/'
+      preLoaderRoute: typeof AppAuthorityIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/issues/$issueId': {
+      id: '/_app/issues/$issueId'
+      path: '/issues/$issueId'
+      fullPath: '/issues/$issueId'
+      preLoaderRoute: typeof AppIssuesIssueIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/verification/$issueId': {
+      id: '/_app/verification/$issueId'
+      path: '/verification/$issueId'
+      fullPath: '/verification/$issueId'
+      preLoaderRoute: typeof AppVerificationIssueIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/authority/resolve/$issueId': {
+      id: '/_app/authority/resolve/$issueId'
+      path: '/authority/resolve/$issueId'
+      fullPath: '/authority/resolve/$issueId'
+      preLoaderRoute: typeof AppAuthorityResolveIssueIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppMapRoute: typeof AppMapRoute
+  AppReportRoute: typeof AppReportRoute
+  AppIssuesIssueIdRoute: typeof AppIssuesIssueIdRoute
+  AppVerificationIssueIdRoute: typeof AppVerificationIssueIdRoute
+  AppAuthorityIndexRoute: typeof AppAuthorityIndexRoute
+  AppAuthorityResolveIssueIdRoute: typeof AppAuthorityResolveIssueIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppMapRoute: AppMapRoute,
+  AppReportRoute: AppReportRoute,
+  AppIssuesIssueIdRoute: AppIssuesIssueIdRoute,
+  AppVerificationIssueIdRoute: AppVerificationIssueIdRoute,
+  AppAuthorityIndexRoute: AppAuthorityIndexRoute,
+  AppAuthorityResolveIssueIdRoute: AppAuthorityResolveIssueIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
